@@ -12,6 +12,7 @@
 
 var readline = require('readline');
 var fs = require('fs');
+var request = require('request');
 
 var rl = readline.createInterface({
   input: process.stdin,
@@ -20,14 +21,19 @@ var rl = readline.createInterface({
 
 rl.question('URL: ', function(website){
   rl.question('Save to file: ', function(saveFile) {
-    var something = 
-    fs.writeFile(saveFile, something, function(err, buffer) {
+    var url = request.get(website, function(err, resp, html){
       if (err) {
         console.log(err.message);
+        return;
       }
-      console.log('Saved to ' + saveFile);
-      rl.close();
+      fs.writeFile(saveFile, html, function(err, buffer) {
+        if (err) {
+          console.log(err.message);
+        }
+        console.log('Saved to ' + saveFile);
+        rl.close();
+      });
+      console.log(html);
     });
   });
-
 });
