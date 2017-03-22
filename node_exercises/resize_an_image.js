@@ -10,7 +10,7 @@
 //   // save image data and resize
 // });
 
-var fs = require('fs');
+var request = require('fs');
 var gm = require('gm');
 
 gm('picture.png')
@@ -27,6 +27,18 @@ var options = {
   url: 'https://raw.githubusercontent.com/voodootikigod/logo.js/master/js.png',
   encoding: null
 };
+
+
+
 request(options, function(err, response, imageData) {
   // save image data and resize
+  gm('picture.png')
+    .resize(240, 240)
+    .write('thumnail.png', function(err) {
+      if (err) {
+        console.log(err.message);
+        return;
+      }
+      console.log('It worked!');
+    });
 });
